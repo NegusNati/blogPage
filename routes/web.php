@@ -14,5 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('posts');
+});
+
+Route::get('posts/{post}', function($slug){
+    // dd($slug);
+    $path = __DIR__ . "/../resources/posts/{$slug}.html";
+
+    if(! file_exists($path)){
+
+        return redirect('/');
+        // abort(404,"No such page");
+    }
+    $post = file_get_contents($path);
+    return view('post', ['post' =>$post]);
 });
