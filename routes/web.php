@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
+use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,18 +18,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('posts');
+
+    // $files =  File::files(resource_path("posts/"));
+
+    $posts = Post::all();
+
+    // $posts =array_map(function ($file){
+    //     $document =  YamlFrontMatter::parseFile($file);
+    //     return new Post($document->title, $document->excerpt, $document->date, $document->body(), $document->slug);
+    // },$files);
+
+
+    // dd($posts);
+
+
+    return view('posts', ['posts' => $posts]);
 });
 
-Route::get('posts/{post}', function($slug){
-    // dd($slug);
-    $path = __DIR__ . "/../resources/posts/{$slug}.html";
-
-    if(! file_exists($path)){
-
-        return redirect('/');
-        // abort(404,"No such page");
-    }
-    $post = file_get_contents($path);
-    return view('post', ['post' =>$post]);
+Route::get('posts/{post}', function ($slug) {
+    $post = Post::findOrFail($slug);
+    return view('post', ['post' => $post]);
 });
+
+// ->where('post', '[A-z_\-]+');
