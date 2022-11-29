@@ -9,12 +9,17 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
+
 
     public function getRouteKeyName()
     { //the key we use to find our route of single posts in Route-Model binding
         return  'slug';
 
     }
+    public function catagory(){
+        return $this->belongsTo(Catagory::class);
+    }
+
 
 }

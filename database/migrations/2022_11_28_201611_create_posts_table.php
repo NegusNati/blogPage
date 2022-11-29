@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('catagory_id');
             $table->string('slug')->uniqid();
             $table->string('title');
             $table->text('excerpt');

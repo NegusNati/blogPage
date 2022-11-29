@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Catagory;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
@@ -21,7 +22,6 @@ Route::get('/', function () {
 
     // $files =  File::files(resource_path("posts/"));
 
-    $posts = Post::all();
 
     // $posts =array_map(function ($file){
     //     $document =  YamlFrontMatter::parseFile($file);
@@ -32,12 +32,18 @@ Route::get('/', function () {
     // dd($posts);
 
 
-    return view('posts', ['posts' => $posts]);
+    return view('posts', ['posts' => Post::all()]);
 });
 
-Route::get('posts/{post:slug}', function (Post $post) {
+Route::get('posts/{post}', function (Post $post) {
     // $post = Post::findOrFail($post);
     return view('post', ['post' => $post]);
+});
+
+
+Route::get('catagory/{catagory:slug}', function (Catagory $catagory) {
+    // $catagory = Catagory::all();
+    return view('posts', ['posts' => $catagory->posts]);
 });
 
 // ->where('post', '[A-z_\-]+');
