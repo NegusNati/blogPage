@@ -20,6 +20,9 @@ class Post extends Model
     public function catagory(){
         return $this->belongsTo(Catagory::class);
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
 
 }

@@ -2,6 +2,7 @@
 
 use App\Models\Catagory;
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
 use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
@@ -32,7 +33,7 @@ Route::get('/', function () {
     // dd($posts);
 
 
-    return view('posts', ['posts' => Post::all()]);
+    return view('posts', ['posts' => Post::with('catagory')->get()]);
 });
 
 Route::get('posts/{post}', function (Post $post) {
