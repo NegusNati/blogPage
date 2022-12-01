@@ -3,7 +3,7 @@
     <article>
         <h1>{!! $post->title !!}</h1>
         <p>
-            By <a href="#">{{ $post->user->name}}</a> in <a href="/catagories/{{ $post->catagory->id }}"> {{ $post->catagory->name }} </a>
+            By <a href="/authors/{{ $post->author->userName }}">{{$post->author->name}}</a> in <a href="/catagory/{{ $post->catagory->slug }}"> {{ $post->catagory->name }} </a>
          </p>
 
         <div>{!! $post->body !!}</div>

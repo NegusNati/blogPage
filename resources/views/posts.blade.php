@@ -7,8 +7,8 @@
                 <h1>{{ $post->title }}</h1>
             </a>
             <p>
-               <a href="/catagory/{{ $post->catagory->slug }}"> {{ $post->catagory->name }} </a>
-            </p>
+                By <a href="/authors/{{ $post->author->userName }}">{{$post->author->name}}</a> in <a href="/catagory/{{ $post->catagory->slug }}"> {{ $post->catagory->name }} </a>
+             </p>
             <div>
                 {!! $post->excerpt !!}
             </div>

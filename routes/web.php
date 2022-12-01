@@ -2,6 +2,7 @@
 
 use App\Models\Catagory;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
@@ -33,7 +34,7 @@ Route::get('/', function () {
     // dd($posts);
 
 
-    return view('posts', ['posts' => Post::with('catagory')->get()]);
+    return view('posts', ['posts' => Post::latest()->with('catagory','author')->get()]);
 });
 
 Route::get('posts/{post}', function (Post $post) {
@@ -44,7 +45,12 @@ Route::get('posts/{post}', function (Post $post) {
 
 Route::get('catagory/{catagory:slug}', function (Catagory $catagory) {
     // $catagory = Catagory::all();
-    return view('posts', ['posts' => $catagory->posts]);
+    return view('posts', ['posts' => $catagory->posts->load(['catagory','author'])]);
 });
 
+Route::get('authors/{author:userName}', function (User $author){
+
+    return view('posts', ['posts' => $author->posts->load(['catagory','author'])]);
+
+});
 // ->where('post', '[A-z_\-]+');

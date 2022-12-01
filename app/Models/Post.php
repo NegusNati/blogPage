@@ -11,6 +11,8 @@ class Post extends Model
 
     protected $guarded = ['id'];
 
+    // protected $with = ['catagory', 'author'];
+
 
     public function getRouteKeyName()
     { //the key we use to find our route of single posts in Route-Model binding
@@ -20,8 +22,8 @@ class Post extends Model
     public function catagory(){
         return $this->belongsTo(Catagory::class);
     }
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function author(){
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 
