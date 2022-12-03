@@ -33,9 +33,17 @@ Route::get('/', function () {
 
     // dd($posts);
 
+    $post = Post::latest();
+
+    if (request('search')) {
+        $post
+            ->where('title', 'like', '%' . request('search') . '%')
+            ->orWhere('body', 'like', '%' . request('search') . '%');
+    }
+
 
     return view('posts', [
-        'posts' => Post::latest()->with('catagory', 'author')->get(),
+        'posts' => $post->get(),
         'catagories' => Catagory::all()
     ]);
 })->name('home');
@@ -48,9 +56,11 @@ Route::get('posts/{post}', function (Post $post) {
 
 Route::get('catagories/{catagory:slug}', function (Catagory $catagory) {
     // $catagory = Catagory::all();
-    return view('posts', ['posts' => $catagory->posts->load(['catagory', 'author']),
-    'currentCatagory' => $catagory,
-    'catagories' => Catagory::all()]);
+    return view('posts', [
+        'posts' => $catagory->posts->load(['catagory', 'author']),
+        'currentCatagory' => $catagory,
+        'catagories' => Catagory::all()
+    ]);
 })->name('catagory');
 
 Route::get('authors/{author:userName}', function (User $author) {
