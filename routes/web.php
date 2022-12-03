@@ -34,8 +34,11 @@ Route::get('/', function () {
     // dd($posts);
 
 
-    return view('posts', ['posts' => Post::latest()->with('catagory','author')->get()]);
-});
+    return view('posts', [
+        'posts' => Post::latest()->with('catagory', 'author')->get(),
+        'catagories' => Catagory::all()
+    ]);
+})->name('home');
 
 Route::get('posts/{post}', function (Post $post) {
     // $post = Post::findOrFail($post);
@@ -43,14 +46,15 @@ Route::get('posts/{post}', function (Post $post) {
 });
 
 
-Route::get('catagory/{catagory:slug}', function (Catagory $catagory) {
+Route::get('catagories/{catagory:slug}', function (Catagory $catagory) {
     // $catagory = Catagory::all();
-    return view('posts', ['posts' => $catagory->posts->load(['catagory','author'])]);
-});
+    return view('posts', ['posts' => $catagory->posts->load(['catagory', 'author']),
+    'currentCatagory' => $catagory,
+    'catagories' => Catagory::all()]);
+})->name('catagory');
 
-Route::get('authors/{author:userName}', function (User $author){
+Route::get('authors/{author:userName}', function (User $author) {
 
-    return view('posts', ['posts' => $author->posts->load(['catagory','author'])]);
-
+    return view('posts', ['posts' => $author->posts->load(['catagory', 'author']), 'catagories' => Catagory::all()]);
 });
 // ->where('post', '[A-z_\-]+');
