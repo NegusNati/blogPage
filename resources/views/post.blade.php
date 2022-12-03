@@ -53,7 +53,7 @@
 
                     <div class="space-y-4 lg:text-lg leading-loose">
                         <p>
-                            {{$post->body}}
+                            {!!$post->body!!}
                         </p>
 
 
