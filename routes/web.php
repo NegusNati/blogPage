@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\Catagory;
 use App\Models\Post;
 use App\Models\User;
@@ -20,38 +21,9 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', [PostController::class, 'index'])->name('home');
 
-    // $files =  File::files(resource_path("posts/"));
-
-
-    // $posts =array_map(function ($file){
-    //     $document =  YamlFrontMatter::parseFile($file);
-    //     return new Post($document->title, $document->excerpt, $document->date, $document->body(), $document->slug);
-    // },$files);
-
-
-    // dd($posts);
-
-    $post = Post::latest();
-
-    if (request('search')) {
-        $post
-            ->where('title', 'like', '%' . request('search') . '%')
-            ->orWhere('body', 'like', '%' . request('search') . '%');
-    }
-
-
-    return view('posts', [
-        'posts' => $post->get(),
-        'catagories' => Catagory::all()
-    ]);
-})->name('home');
-
-Route::get('posts/{post}', function (Post $post) {
-    // $post = Post::findOrFail($post);
-    return view('post', ['post' => $post]);
-});
+Route::get('posts/{post}', [PostController::class, 'show']);
 
 
 Route::get('catagories/{catagory:slug}', function (Catagory $catagory) {
