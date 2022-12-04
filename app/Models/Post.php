@@ -32,6 +32,11 @@ class Post extends Model
             $query
                 ->where('title', 'like', '%' . $search . '%')
                 ->orWhere('body', 'like', '%' . $search . '%'));
+
+            $query->when($filters['catagory'] ?? false, fn ($query, $catagory) =>
+            $query
+                ->where('title', 'like', '%' . $search . '%')
+                ->orWhere('body', 'like', '%' . $search . '%'));
     }
 
     public function getRouteKeyName()
