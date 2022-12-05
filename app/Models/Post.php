@@ -29,14 +29,29 @@ class Post extends Model
         // }); with arrow function down
 
         $query->when($filters['search'] ?? false, fn ($query, $search) =>
+        $query->where(fn ($query) =>
             $query
-                ->where('title', 'like', '%' . $search . '%')
-                ->orWhere('body', 'like', '%' . $search . '%'));
+            ->where('title', 'like', '%' . $search . '%')
+            ->orWhere('body', 'like', '%' . $search . '%')));
 
-            $query->when($filters['catagory'] ?? false, fn ($query, $catagory) =>
-            $query
-                ->where('title', 'like', '%' . $search . '%')
-                ->orWhere('body', 'like', '%' . $search . '%'));
+        $query->when($filters['catagory'] ?? false, fn ($query, $catagory) =>
+        $query->whereHas('catagory', fn ($query) => $query->where('slug', $catagory)));
+
+        $query->when($filters['author'] ?? false, fn ($query, $author) =>
+        $query->whereHas('author', fn ($query) => $query->where('userName', $author)));
+
+
+
+
+
+
+        // $query
+        //     ->whereExists( fn($query) =>
+        //         $query->from('catagories')
+        //         ->whereColumn('catagories.id','posts.catagory_id')
+        //         ->where('catagories.slug',$catagory))
+
+        // );
     }
 
     public function getRouteKeyName()
