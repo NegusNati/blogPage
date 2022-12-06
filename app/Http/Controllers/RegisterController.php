@@ -23,7 +23,7 @@ class RegisterController extends Controller
         $attribute = $this->validate($request, [
             'name' => ['required', 'max:255'],
             'userName' => ['required', 'min:3','max:255',Rule::unique('users','userName')],
-            'email' => ['required', 'max:255', 'email', Rule::unique('users', 'email')],
+            'email' => ['required', 'max:255', 'email', Rule::unique( 'users', 'email')],
             'password' => ['required', 'min:7', 'max:255']
         ]);
 
@@ -40,9 +40,9 @@ class RegisterController extends Controller
 //            )
 //        );
 
+//        session()->flash('success', 'You have successfully Registered');
 
-
-        return redirect('/');
+        return redirect('/')->with('success', 'You have successfully Registered');;
     }
 
 }
