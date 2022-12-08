@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -28,7 +29,7 @@ class RegisterController extends Controller
         ]);
 
 
-        User::create($attribute);
+        $user= User::create($attribute);
 //        User::create(
 //            \request()->validate(
 //                [
@@ -41,6 +42,8 @@ class RegisterController extends Controller
 //        );
 
 //        session()->flash('success', 'You have successfully Registered');
+        //login the user
+        \auth()->login($user);
 
         return redirect('/')->with('success', 'You have successfully Registered');;
     }
