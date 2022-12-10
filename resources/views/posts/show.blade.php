@@ -63,6 +63,25 @@
                     </div>
                 </div>
                 <section class="col-span-8 col-start-5 mt-10 space-y-6">
+                    <x-panel>
+
+                    <form method="post" action="#" >
+                        @csrf
+                        <header class="flex items-center">
+                            <img src="https://i.pravatar.cc/60?u={{auth()->id()}}" alt="picture" width="40" height="40" class="rounded-full">
+                            <h1 class="ml-4">Want to Participate?</h1>
+                        </header>
+                        <div class="mt-4">
+                            <textarea name="body" placeholder="have any thoughts?" cols="30" rows="5" class="w-full text-sm border border-blue-200 p-2 focus:outline-none focus:ring"></textarea>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-blue-400 font-semibold m-1 px-8 py-3 rounded-2xl text-white text-xs uppercase hover:bg-blue-600">Send</button>
+                        </div>
+
+                    </form>
+
+                    </x-panel>
+
                     @foreach($post->comment as $comment)
                         <x-post-comment :comment="$comment"/>
                     @endforeach
