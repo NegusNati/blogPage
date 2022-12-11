@@ -4,7 +4,7 @@
 
     <article>
         <div class="flex-shrink-0">
-            <img src="https://i.pravatar.cc/60?u={{$comment->id}}" alt="picture" width="70" height="70"
+            <img src="https://i.pravatar.cc/60?u={{$comment->user_id}}" alt="picture" width="70" height="70"
                  class="rounded-xl">
         </div>
         <div>

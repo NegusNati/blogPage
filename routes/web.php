@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
+use Illuminate\Validation\ValidationException;
 use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
@@ -24,18 +25,48 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 |
 */
 
+Route::post('newsletter', function () {
+
+    request()->validate([
+        'email' => ['required', 'email']
+    ]);
+
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => 'us21'
+    ]);
+
+
+   try{
+    $response =$mailchimp->lists->addListMember(config('services.mailchimp.user_key'), [
+        "email_address" => request('email'),
+        "status" => "subscribed",
+    ]);
+   }catch(\Exception $e){
+    throw ValidationException::withMessages([
+        'email' => "This email could not be added to our newsletter, try another one"
+    ]);
+   }
+
+
+   return redirect('/')->with('success', "You have signed up for the awesome  Newsletter!");
+});
+
+
 Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('posts/{post}', [PostController::class, 'show']);
-Route::post('posts/{post}/comments',[PostCommentController::class, 'store']);
+Route::post('posts/{post}/comments', [PostCommentController::class, 'store']);
 
 
-Route::get('register',[RegisterController::class, 'create'])->middleware('guest');
-Route::post('register',[RegisterController::class, 'store'])->middleware('guest');
+Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
+Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
 
-Route::get('login',[SessionController::class,'create'])->middleware('guest');
-Route::post('session',[SessionController::class,'store'])->middleware('guest');
-Route::post('logout',[SessionController::class,'destroy'])->middleware('auth');
+Route::get('login', [SessionController::class, 'create'])->middleware('guest');
+Route::post('session', [SessionController::class, 'store'])->middleware('guest');
+Route::post('logout', [SessionController::class, 'destroy'])->middleware('auth');
 
 
 
@@ -48,5 +79,3 @@ Route::post('logout',[SessionController::class,'destroy'])->middleware('auth');
 //         'catagories' => Catagory::all()
 //     ]);
 // })->name('catagory');
-
-
