@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Catagory;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -19,5 +20,14 @@ class PostController extends Controller
         return view('posts.show', ['post' => $post]);
     }
 
+    public function create(){
+
+        // if(auth()->guest()){
+        //     abort(Response::HTTP_FORBIDDEN);
+        // }
+
+       
+        return view('posts.create');
+    }
 
 }
