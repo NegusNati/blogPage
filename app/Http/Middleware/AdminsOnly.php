@@ -25,7 +25,9 @@ class AdminsOnly
         // }
         // ddd(auth()->user()->userName);
         if (auth()->user()->userName !== "Negus") {
-            abort(403);
+            session()->flash('success','Not allowed');
+            // abort(403);
+            return redirect()->back();
         }
 
 
