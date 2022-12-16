@@ -22,19 +22,29 @@
 
             <div class="mt-8 md:mt-0 flex items-center">
                 @auth
-                <span class="text-xs font-bold uppercase">Welcome,{{ auth()->user()->name }}</span>
+                  <x-dropdown-button>
+                    <x-slot name="trigger">
+                        <button class="text-xs font-bold uppercase">Welcome,{{ auth()->user()->name }}</button>
+                    </x-slot>
+                    <x-dropdown-item href="/admin/dashbord">Dashboard</x-dropdown-item>
+                    <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+                    <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()">Log Out</x-dropdown-item>
+                    <form action="/logout" method="post" id="logout-form" class="hidden">
+                        @csrf
+                        <button type="submit" class="text-xs font-semibold uppercase ml-4 text-blue-400">
+                            Logout
+                        </button>
+                    </form>
+                </x-dropdown-button>
 
-                <form action="/logout" method="post">
-                    @csrf
-                    <button type="submit" class="text-xs font-semibold uppercase ml-4 text-blue-400">
-                        Logout
-                    </button>
 
-                </form>
+
                 @else
                 <a href="/register" class="text-xs font-bold uppercase">Register</a>
                 <a href="/login" class="ml-3 text-xs font-bold uppercase">LogIn</a>
                 @endauth
+
+
 
                 <a href="#newsletter"
                     class="bg-blue-500 ml-4 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
