@@ -1,6 +1,6 @@
 <!doctype html>
 
-<title>Laravel From Scratch Blog</title>
+<title>The LALIBELA Blog</title>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -22,13 +22,21 @@
 
             <div class="mt-8 md:mt-0 flex items-center">
                 @auth
-                  <x-dropdown-button>
+                <x-dropdown-button>
                     <x-slot name="trigger">
                         <button class="text-xs font-bold uppercase">Welcome,{{ auth()->user()->name }}</button>
                     </x-slot>
-                    <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard</x-dropdown-item>
-                    <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
-                    <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()">Log Out</x-dropdown-item>
+
+                    @can('admin')
+                    <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard
+                    </x-dropdown-item>
+                    <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post
+                    </x-dropdown-item>
+                    @endcan
+
+
+                    <x-dropdown-item href="#" x-data="{}"
+                        @click.prevent="document.querySelector('#logout-form').submit()">Log Out</x-dropdown-item>
                     <form action="/logout" method="post" id="logout-form" class="hidden">
                         @csrf
                         <button type="submit" class="text-xs font-semibold uppercase ml-4 text-blue-400">

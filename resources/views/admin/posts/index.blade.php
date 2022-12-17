@@ -24,13 +24,14 @@
                                         <a href="/admin/posts/edit/{{ $post->id }}"
                                             class="text-blue-500 hover:text-blue-600">Edit</a>
                                     </td>
-
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <form method="POST" action="/admin/posts/delete/{{ $post->id }}">
+                                        <form method="POST" action="/admin/posts/delete/{{ $post->id }}"
+                                           >
                                             @csrf
                                             @method('DELETE')
 
-                                            <button class="text-xs text-gray-400">Delete</button>
+                                            <button class="text-xs text-gray-400"
+                                            >Delete</button>
                                         </form>
                                     </td>
                                 </tr>

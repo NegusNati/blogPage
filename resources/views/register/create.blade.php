@@ -8,7 +8,7 @@
                 <form method="post" action="/register" class="mt-10">
                     @csrf
                     <x-form.input name="name" />
-                    <x-form.input name="username" autocomplet="off" />
+                    <x-form.input name="userName" autocomplet="off"/>
                     <x-form.input name="email" type="email" autocomplet="off" />
                     <x-form.input name="password" type="password" autocomplet="off" />
 

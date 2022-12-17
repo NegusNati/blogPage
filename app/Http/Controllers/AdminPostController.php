@@ -93,9 +93,9 @@ class AdminPostController extends Controller
     public function destroy(Post $post)
     {
 
-        if (Storage::exists($post->thumbnail)) {
-            Storage::delete($post->thumbnail);
-        }
+        // if (Storage::exists($post->thumbnail)) {
+        //     Storage::delete($post->thumbnail);
+        // }
         $post->delete();
 
         return back()->with('success', "Post Deleted ");

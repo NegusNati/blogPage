@@ -43,7 +43,7 @@ class RegisterController extends Controller
 
 //        session()->flash('success', 'You have successfully Registered');
         //login the user
-        \auth()->login($user);
+            auth()->login($user);
 
         return redirect('/')->with('success', 'You have successfully Registered');;
     }
