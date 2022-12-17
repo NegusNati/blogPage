@@ -1,6 +1,6 @@
 <header class="max-w-xl mx-auto mt-20 text-center">
     <h1 class="text-4xl">
-        Latest <span class="text-blue-500">Laravel From Scratch</span> News
+        The <span class="text-blue-500 text-5xl mb-8"> Lalibela  Blog </span>Page
     </h1>
 
 
